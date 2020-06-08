@@ -1,23 +1,30 @@
+
 #!/bin/bash -x
-declare -a totalWonAmount;
-declare -a totalLooseAmount;
-
-dummyLuckyCount=0;
-dummyUnluckyCount=0;
-luckyCount=0;
-unluckyCount=0;
-luckyDay=0
-unluckyDay=0;
-
 WINLOOSEAMOUNT=50;
 BET=1;
 MINSTAKE=50;
 MAXSTAKE=150;
-#This is  we calculating for only One Month
+#This Loop For months if gambler won in previous month
+#We Are Storing Win Loose History of One Month In array
+	while :
+	do
+		#Storing Loose won Amount Of each Day
+		declare -a totalWonAmount;
+		declare -a totalLooseAmount;
+		#for Lucky Unlucky
+		noWonDays=0;
+      noLooseDays=0;
+		dummyLuckyCount=0;
+		dummyUnluckyCount=0;
+		luckyCount=0;
+		unluckyCount=0;
+		luckyDay=0
+		unluckyDay=0;
+
 		for (( day=1;day<31;day++ ))
 		do
 			stake=100;
-			#flag for wOn or loose
+			#flag for won or loose
 			flag=0;
 
 			while :
@@ -96,5 +103,28 @@ MAXSTAKE=150;
 
 #LUCKIEST DAY UNLUCKIET DAY AND THEIR WON AND LOOSE AMOUNT
 		echo -e "\n";
-		echo "LUCKYDAY is=" "DAY"$luckyDay  "Won Max Amount="$(( $WINLOOSEAMOUNT * $luckyCount));
-		echo "UNLUCKYDAY is=" "DAY"$unluckyDay  "Loose Max Amount="$(( $WINLOOSEAMOUNT * $unluckyCount));
+		echo "LUCKYDAY is=" "DAY"$luckyDay  "Max Winning  Amount="$(( $WINLOOSEAMOUNT * $luckyCount));
+		echo "UNLUCKYDAY is=" "DAY"$unluckyDay  "Max Loose Amount="$(( $WINLOOSEAMOUNT * $unluckyCount));
+
+#Here we check Gambler allowed to play next month or not
+#By Using Array Element We calculating winning and Loose Days
+		noWonDays=${#totalWonAmount[@]};
+		noLooseDays=${#totalLooseAmount[@]};
+
+		if [ $noWonDays -gt $noLooseDays ]
+		then
+			read -p "DO YOU WANT TO PLAY NEXT MONTH Press (y)" response;
+			if [ "$response" = "y" ]
+			then
+				echo "Welcome To Next Month";
+			else
+				break;
+			fi;
+		else
+			echo "YOU NOT Allowed To Play Next Month";
+			break;
+		fi;
+	#To free Array Memory Beacause I have faced Array Overlapping Problem
+	unset totalWonAmount;
+	unset totalLooseAmount;
+	done
