@@ -1,2 +1,5 @@
 #!/bin/bash -x
-echo "Welcome";
+
+STAKE=100;
+BET=1;
+
