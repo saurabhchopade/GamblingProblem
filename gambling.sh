@@ -51,6 +51,11 @@ MAXSTAKE=150;
 			then
 			echo "TOTAL WON AMOUNT="$(($(printf '%s +' "${totalWonAmount[@]}" )0));
 			echo "TOTAL LOOSE AMOUNT="$(($(printf '%s +' "${totalLooseAmount[@]}" )0));
-			fi;
-							
+			fi;							
 		done
+
+#Here We  displaying Count Of total Winning or Loosing  Day In Month At End Of Month
+		echo "Count Of Winning Days="${#totalWonAmount[@]} "BY= "$(($( printf '%s +' "${totalWonAmount[@]}" )0));
+		echo "Count Of Loose Days="${#totalLooseAmount[@]} "BY="$(($( printf '%s +' "${totalLooseAmount[@]}" )0));
+
+		
